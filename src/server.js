@@ -2,6 +2,9 @@ import express from 'express'
 import cors from 'cors' 
 import productsRoutes from './routes/products.routes.js'
 import usersRoutes from './routes/users.routes.js'
+import { connectToDatabase } from './db.js'
+
+
 const app = express()
 
 app.use(cors()) 
@@ -15,6 +18,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ erro: err.message })
 })
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000')
-})
+const PORT = 3000
+
+
+connectToDatabase()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor rodando com sucesso na porta ${PORT}`)
+    })
+  })
+  .catch((err) => {
+    console.error('❌ Não foi possível iniciar o servidor por falhas no banco de dados:', err)
+  })

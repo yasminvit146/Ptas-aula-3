@@ -1,16 +1,39 @@
-import { readUsers, writeUsers } from '../db.js'
+
+import { getDb } from '../db.js' 
+import { ObjectId } from 'mongodb'
+
+const getCollection = () => getDb().collection('users')
 
 export const usersModel = {
+ 
   async listar() {
-    return (await readUsers()).filter(u => !u.deletedAt)
+    const col = getCollection()
+    return await col.find({}).toArray()
   },
 
+ 
   async criar(data) {
-    const users = await readUsers()
-    const id = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1
-    const novo = { id, ...data }
-    users.push(novo)
-    await writeUsers(users)
-    return novo
+    const col = getCollection()
+    
+  
+    const result = await col.insertOne(data)
+    
+   
+    return { _id: result.insertedId, ...data }
+  },
+
+ 
+  async atualizar(id, updatedData) {
+    const col = getCollection()
+    return await col.updateOne(
+      { _id: new ObjectId(id) }, 
+      { $set: updatedData }
+    );
+  },
+
+
+  async remover(id) {
+    const col = getCollection()
+    return await col.deleteOne({ _id: new ObjectId(id) });
   }
 }
