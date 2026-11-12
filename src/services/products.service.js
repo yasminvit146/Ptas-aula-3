@@ -20,7 +20,7 @@ export const productsService = {
     if (!product) {
       const erro = new Error('produto não encontrado')
       erro.status = 404
-      throw erro
+      throw { status: 404, titulo: 'Não encontrado', message: `User ${id} não existe` }
     }
 
     return productsModel.update(id, data)

@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { valida } from '../middlewares/valida.js'
-import { productSchema } from '../schemas/product.schema.js'
+import { valida } from '../../middlewares/valida.js'
+import { productSchema } from '../../schemas/product.schema.js'
 import {
   listProducts,
   getProduct,
   createProduct,
   updateProduct
-} from '../controllers/products.controller.js'
+} from '../../controllers/products.controller.js'
 
 const router = Router()
 

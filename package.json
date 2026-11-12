@@ -2,10 +2,12 @@
   "name": "atividade-ptas-aula-3",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+    "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
